@@ -1,0 +1,12 @@
+<div class="small-6 small-centered columns">
+  <%= simple_form_for(@user) do |f| %>
+    <%= f.input :handle, label: 'Username:', error: false %>
+    <%= f.input :name, error: false %>
+    <%= f.input :email, error: false %>
+    <div style="display:none">
+      <%= f.input :provider, error: false %>
+      <%= f.input :omniauth_id, error: false %>
+    </div>
+    <%= f.button :submit %>
+  <% end %>
+</div>
