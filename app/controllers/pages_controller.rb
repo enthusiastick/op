@@ -1,7 +1,7 @@
 class PagesController < ApplicationController
 
   def chat
-    render layout: false
+    render layout: "chat"
   end
 
 end
