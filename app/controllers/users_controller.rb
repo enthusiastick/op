@@ -4,6 +4,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       flash[:success] = "Signed up."
+      session[:current_user_id] = @user.id
       redirect_to root_path
     else
       flash[:error] = "Whups, something went wrong."
@@ -15,6 +16,7 @@ class UsersController < ApplicationController
     @user = Omniauther.authenticate(env['omniauth.auth'])
     if @user.valid?
       flash[:success] = "Signed in."
+      session[:current_user_id] = @user.id
       redirect_to root_path
     else
       if env['omniauth.auth']['provider'] == 'google_oauth2'
@@ -24,6 +26,12 @@ class UsersController < ApplicationController
         @user.omniauth_id = env['omniauth.auth']['uid']
       end
     end
+  end
+
+  def signout
+    session[:current_user_id] = nil
+    flash[:success] = "Signed out."
+    redirect_to root_path
   end
 
   protected

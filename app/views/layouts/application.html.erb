@@ -12,7 +12,52 @@
   </head>
 
   <body>
+    <nav class="top-bar" data-topbar>
+      <ul class="title-area">
+        <li class="name">
+          <h1><%= link_to 'The Outpost LARP', root_path %></h1>
+        </li>
+        <li class="toggle-topbar menu-icon"><a href="#">Menu</a></li>
+      </ul>
+
+      <section class="top-bar-section">
+        <!-- Right Nav Section -->
+        <ul class="right">
+          <li class="divider"></li>
+          <% if user_signed_in? %>
+            <li><%= link_to 'Sign out', '/sign_out' %></li>
+          <% else %>
+            <li><%= link_to 'Sign in', '/sign_in' %></li>
+          <% end %>
+        </ul>
+
+        <!-- Left Nav Section -->
+        <ul class="left">
+          <li class="divider"></li>
+          <% if user_signed_in? %>
+            <li><%= link_to "Signed in as: #{current_user.email}", '#' %></li>
+          <% else %>
+            <li><%= link_to 'Not signed in.', '#' %></li>
+          <% end %>
+        </ul>
+      </section>
+    </nav>
     <div class="row">
+      <% flash.each do |name, msg| %>
+        <% if msg.is_a?(String) %>
+          <div data-alert class="alert-box <%=
+            if name == :success
+              "success"
+            elsif name == :alert
+              "alert"
+            else
+               "info"
+            end %>">
+            <%= content_tag :div, msg %>
+            <a href="#" class="close">&times;</a>
+          </div>
+        <% end %>
+      <% end %>
       <%= yield %>
     </div>
     <%= javascript_include_tag "application" %>
