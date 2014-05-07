@@ -21,6 +21,10 @@ class UsersController < ApplicationController
     else
       if env['omniauth.auth']['provider'] == 'google_oauth2'
         @user.provider = 'google_oauth2'
+      elsif env['omniauth.auth']['provider'] == 'facebook'
+        @user.provider = 'facebook'
+      end
+      if @user.provider != nil
         @user.name = env['omniauth.auth']['info']['name']
         @user.email = env['omniauth.auth']['info']['email']
         @user.omniauth_id = env['omniauth.auth']['uid']
