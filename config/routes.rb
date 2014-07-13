@@ -4,6 +4,8 @@ Rails.application.routes.draw do
 
   resources :users, only: [:new, :create, :show, :edit, :update]
 
+  get 'sendgrid', to: 'pages#sendgrid'
+
   get 'sign_in', to: 'pages#signin'
   get 'sign_out', to: 'users#signout'
 
